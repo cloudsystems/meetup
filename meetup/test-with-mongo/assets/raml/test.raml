@@ -1,0 +1,121 @@
+#%RAML 0.8
+title: example API
+#baseUri: http://testapi.cloudsystems.es
+baseUri: http://mocksvc.mulesoft.com/mocks/18c57cc4-c7b3-4938-997a-ba8041e7c67d
+version: v1
+
+  
+traits:
+  - paged:
+      queryParameters:
+        items:
+          description: The number of pages to return
+          type: number  
+          example: 100
+        offset:
+          description: the initial data to start
+          type: number
+          example: 10         
+/users:    
+  description:
+    dfsdfdsfdsf |
+        sdasasd
+        
+  is: [ paged ]
+  get:
+    queryParameters:
+      username:
+        description: user to find
+      fields:
+        description: fields to filter        
+    responses:
+      200:
+        body:
+          application/json:                              
+            example: |              
+             {    "result": {     "info": "OK"},
+              "data": {
+                "users": [
+                { "name": "Marco","firstname": "Polo",
+                "address": {"descripcion": "blabbla"}},
+                { "name": "Prueba","firstname": "ww",
+                 "address": {"descripcion": "blab bla" }}
+                ]
+                }
+                }
+            schema: |
+              {"type":"object","required":false,"properties":{ "data": { "type":"object",  "required":false, "properties":{ "users": { "type":"array",  "required":false, "items": { "type":"object",  "required":false, "properties":{ "address": { "type":"object",  "required":false, "properties":{ "descripcion": { "type":"string",  "required":false } } }, "firstname": { "type":"string", "required":false }, "name": { "type":"string", "required":false } } } } } }, "result": { "type":"object", "required":false, "properties":{ "info": { "type":"string","required":false } } } }}
+      400:
+        body:
+          application/json:                              
+            example: |              
+             {    "result": {     "info": "bad parameters"}             
+              } 
+            schema: |
+                           {"type":"object","required":false,"properties":{ "result": { "type":"object", "required":false, "properties":{ "info": { "type":"string", "required":false } } } }}
+  post:
+    description: creates an user
+    body:
+      application/json:
+        example: |
+          {"name": "Marco", "firstname": "Polo", "lastname": "2", "address": {   "descripcion": "blab bla",   "number": "2"    }}
+        schema: |    
+                            {"type":"object","required":false,"properties":{ "address": { "type":"object", "required":false, "properties":{ "descripcion": { "type":"string", "required":false }, "number": { "type":"string", "required":false } } }, "firstname": { "type":"string", "required":false }, "lastname": { "type":"string", "required":false }, "name": { "type":"string", "required":false } }}
+    responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {"result": {      "info": "user created"    },
+                "data": {        "id": "23"    }
+                }
+              schema: |
+                              {"type":"object","required":false,"properties":{ "data": { "type":"object", "required":false, "properties":{ "id": { "type":"string",  "required":false } } }, "result": { "type":"object", "required":false, "properties":{ "info": { "type":"string",  "required":false } } } }}              
+           
+  /{userId}:
+    uriParameters:
+      userId:
+        description: user id          
+        maxLength: 200
+        minLength: 8
+    delete:
+      description: removes an user                
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                "result": {
+                    "info": "user deleted"
+                },
+                "data": ""
+                }
+              schema: |
+                {"type":"object","required":false,"properties":{ "data": { "type":"string",  "required":false }, "result": { "type":"object", "required":false, "properties":{ "info": { "type":"string","required":false } } } }}
+  
+      
+  
+    put:
+      description: updates an user
+      body:
+        application/json:
+          example: |
+            {"name": "Marco", "firstname": "Polo", "lastname": "2", "address": {   "descripcion": "blab bla",   "number": "2"    }}
+          schema: |    
+                            {"type":"object","required":false,"properties":{ "address": { "type":"object", "required":false, "properties":{ "descripcion": { "type":"string", "required":false }, "number": { "type":"string", "required":false } } }, "firstname": { "type":"string", "required":false }, "lastname": { "type":"string", "required":false }, "name": { "type":"string", "required":false } }}
+      
+      responses:       
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                "result": {
+                    "info": "user updated"
+                },
+                "data": ""
+                }
+              schema: |
+                {"type":"object","required":false,"properties":{ "data": { "type":"string",  "required":false }, "result": { "type":"object", "required":false, "properties":{ "info": { "type":"string","required":false } } } }}
+      
