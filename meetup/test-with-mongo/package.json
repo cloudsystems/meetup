@@ -5,7 +5,7 @@
   "dependencies": {
     "express": "3.4.4",
     "osprey": "0.1.1",
-    "mongo":"*"
+    "mongodb":"*"
   },
   "devDependencies": {
     "grunt": "~0.4.2",
